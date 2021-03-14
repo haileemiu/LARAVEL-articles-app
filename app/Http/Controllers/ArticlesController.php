@@ -30,7 +30,7 @@ class ArticlesController extends Controller
     // Persist that ^ new data
     public function store()
     {
-        Article::create(request()->validateArticle());
+        Article::create($this->validateArticle());
         
         return redirect('/articles');
     }
@@ -46,7 +46,7 @@ class ArticlesController extends Controller
     {
         $article->update($this->validateArticle());
 
-        return redirect('/articles/' . $article->id);
+        return redirect(route('articles.show', $article));
     }
 
     protected function validateArticle()
