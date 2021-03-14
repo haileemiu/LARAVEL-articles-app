@@ -28,5 +28,8 @@ Route::get('/about', function() {
 /* Dedicated Controllers */
 
 Route::get('/articles', 'App\Http\Controllers\ArticlesController@index');
+Route::post('/articles', 'App\Http\Controllers\ArticlesController@store');
+
+Route::get('/articles/create', 'App\Http\Controllers\ArticlesController@create');
 Route::get('/articles/{article}', 'App\Http\Controllers\ArticlesController@show');
 
