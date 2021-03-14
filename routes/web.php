@@ -24,3 +24,9 @@ Route::get('/about', function() {
 
     ]);
 });
+
+/* Dedicated Controllers */
+
+Route::get('/articles', 'App\Http\Controllers\ArticlesController@index');
+Route::get('/articles/{article}', 'App\Http\Controllers\ArticlesController@show');
+
