@@ -11,7 +11,7 @@
         <form method="POST" action="/articles/{{ $article->id }}">
             @csrf
             @method('PUT')
-            
+
             <div class="field">
                 <label for="title">Title</label>
                 <div class="control">
@@ -23,6 +23,7 @@
                 <label for="excerpt">Excerpt</label>
                 <div class="control">
                     <input type="text" class="input" name="excerpt" id="excerpt"  value="{{ $article->excerpt }}">
+
                 </div>
             </div>
 
@@ -30,6 +31,7 @@
                 <label for="body">Body</label>
                 <div class="control">
                     <textarea type="text" class="input" name="body" id="body">{{ $article->body }}</textarea>
+
                 </div>
             </div>
 

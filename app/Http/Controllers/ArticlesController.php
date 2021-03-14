@@ -16,10 +16,8 @@ class ArticlesController extends Controller
     }
 
     // show 1 data item
-    public function show($id)
+    public function show(Article $article)
     {
-        $article = Article::find($id);
-
         return view('articles.show', ['article' => $article]);
     }
 
@@ -32,31 +30,35 @@ class ArticlesController extends Controller
     // Persist that ^ new data
     public function store()
     {
-        // request()->validate([
-        //     'title'=>'required|min:3|max:255',
-        //     'excerpt'=>'required',
-        //     'body'=>'required'
-        // ]);
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required'
+        ]);
 
         $article = new Article();
         $article->title = request('title');
         $article->excerpt = request('excerpt');
         $article->body = request('body');
         $article->save();
+        
         return redirect('/articles');
     }
 
     // Change the data
-    public function edit($id)
+    public function edit(Article $article)
     {
-        $article = Article::find($id);
         return view('articles.edit', ['article' => $article]);
     }
 
     // Persist the change ^
-    public function update($id)
+    public function update(Article $article)
     {
-        $article = Article::find($id);
+        request()->validate([
+            'title' => 'required',
+            'excerpt' => 'required',
+            'body' => 'required'
+        ]);
 
         $article->title = request('title');
         $article->excerpt = request('excerpt');

@@ -13,21 +13,32 @@
             <div class="field">
                 <label for="title">Title</label>
                 <div class="control">
-                    <input type="text" class="input" name="title" id="title">
+                    <input type="text" name="title" id="title" class="input @error('title') is-danger @enderror" value="{{ old('title') }}">
+
+                    @if ($errors->has('title'))
+                    <p class="help is-danger">{{ $errors->first('title') }}</p>
+                    @endif
                 </div>
             </div>
 
             <div class="field">
                 <label for="excerpt">Excerpt</label>
                 <div class="control">
-                    <input type="text" class="input" name="excerpt" id="excerpt">
+                    <input type="text" name="excerpt" id="excerpt" class="input @error('excerpt') is-danger @enderror" value="{{ old('excerpt') }}">
+
+                    @if ($errors->has('excerpt'))
+                    <p class="help is-danger">{{ $errors->first('excerpt') }}</p>
+                    @endif
                 </div>
             </div>
 
             <div class="field">
                 <label for="body">Body</label>
                 <div class="control">
-                    <textarea type="text" class="input" name="body" id="body"></textarea>
+                    <textarea type="text" name="body" id="body" class="input @error('body') is-danger @enderror" value="{{ old('body') }}"></textarea>
+                    @if ($errors->has('body'))
+                    <p class="help is-danger">{{ $errors->first('body') }}</p>
+                    @endif
                 </div>
             </div>
 
