@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\Tag;
 
 class ArticlesController extends Controller
 {
     // list all data
     public function index()
     {
-        $articles = Article::latest()->get();
+        if (request('tag')) {
+            $articles = Tag::where('name', request('tag'))->firstOrFail()->articles;
+        } else {
+            $articles = Article::latest()->get();
+        }
 
         return view('articles.index', ['articles' => $articles]);
     }
@@ -24,14 +29,25 @@ class ArticlesController extends Controller
     // Create new data
     public function create()
     {
-        return view('articles.create');
+        return view('articles.create', [
+            'tags' => Tag::all()
+        ]);
     }
 
     // Persist that ^ new data
     public function store()
     {
-        Article::create($this->validateArticle());
+        $this->validateArticle();
+
+        $article = new Article(request(['title', 'excerpt', 'body']));
         
+        // Temp. hard coded
+        $article->user_id = 1;
+        $article->save();
+        //
+
+        $article->tags()->attach(request('tags')); // correct
+
         return redirect('/articles');
     }
 
@@ -54,7 +70,12 @@ class ArticlesController extends Controller
         return request()->validate([
             'title' => 'required',
             'excerpt' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            /*
+            Now that the validation does not match to model,
+            time to separate the validation (see "store")
+            */
+            'tags' => 'exists:tags,id'
         ]);
     }
 }
